@@ -1,0 +1,73 @@
+<%- include('partials/header'); -%>
+
+<h1>All Contests</h1>
+<h3><%= date %></h3>
+
+<div id="cards">
+<% list.forEach(function(contest){ %>
+    <% const startTimeSeconds = contest.startTimeSeconds; %>
+    <% const startDate = new Date(startTimeSeconds * 1000); %>
+    <% const options = { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        hour: 'numeric', 
+        minute: 'numeric', 
+        timeZone: 'Asia/Kolkata' 
+    }; %>
+    <% const startTimeIST = startDate.toLocaleString('en-US', options); %>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title"><%= contest.name %></h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary">Time: <%= startTimeIST %></h6>
+          <p class="card-text"><div id='timer_<%= contest.id %>' data-start-time='<%= contest.startTimeSeconds %>'></div> <br> Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href='<% if (contest.host == "codeforces.com") { %>https://codeforces.com/contests/<% }else{ %>https://leetcode.com/contest/<% } %><%= contest.id %>' class="card-link">Contest link</a>
+          <!-- <a href="#" class="card-link">Another link</a> -->
+        </div>
+    </div>
+    <script>
+        function updateTimer(startTime, timerElementId) {
+          const timerElement = document.getElementById(timerElementId);
+          const currentTime = Math.floor(Date.now() / 1000);
+          const timeDiff = startTime - currentTime;
+      
+          if (timeDiff <= 0) {
+            timerElement.textContent = 'Contest has started!';
+          } else {
+                const days = Math.floor(timeDiff / 86400);
+                const hours = Math.floor((timeDiff % 86400) / 3600);
+                const minutes = Math.floor((timeDiff % 3600) / 60);
+                const seconds = timeDiff % 60;
+
+                let timeRemaining = '';
+                if (days > 0) {
+                    timeRemaining += `${days}d `;
+                }
+                timeRemaining += `${hours}h ${minutes}m ${seconds}s remaining`;
+
+                timerElement.textContent = timeRemaining;
+          }
+        }
+      
+        // Start timers for each contest
+        window.addEventListener('DOMContentLoaded', () => {
+          const timerElements = document.querySelectorAll('[data-start-time]');
+          timerElements.forEach((timerElement) => {
+            const startTime = timerElement.dataset.startTime;
+            const timerElementId = timerElement.id;
+            setInterval(() => {
+              updateTimer(startTime, timerElementId);
+            }, 1000);
+          });
+        });
+      </script>
+
+
+<% }) %> 
+
+</div>
+
+
+
+
+<%- include('partials/footer'); -%>
