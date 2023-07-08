@@ -21,8 +21,7 @@
           <h5 class="card-title"><%= contest.name %></h5>
           <h6 class="card-subtitle mb-2 text-body-secondary">Time: <%= startTimeIST %></h6>
           <p class="card-text"><div id='timer_<%= contest.id %>' data-start-time='<%= contest.startTimeSeconds %>'></div> <br> Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href='<% if (contest.host == "codeforces.com") { %>https://codeforces.com/contests/<% }else{ %>https://leetcode.com/contest/<% } %><%= contest.id %>' class="card-link">Contest link</a>
-          <!-- <a href="#" class="card-link">Another link</a> -->
+          <a href='<%= contest.link %>' class="card-link">Contest link</a>
         </div>
     </div>
     <script>

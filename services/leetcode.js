@@ -50,7 +50,7 @@ async function leetcode_c() {
               durationSeconds: c.duration / 60.0,
               name: c.title,
               type:'Leet',
-              url: `https://leetcode.com/contest/${c.titleSlug}`,
+              link: `https://leetcode.com/contest/${c.titleSlug}`,
               timezone: 'Asia/Kolkata',
               host: 'leetcode.com',
               id: c.titleSlug,

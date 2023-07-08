@@ -30,6 +30,7 @@ async function codeforces_c() {
 
           const contestsWithHost = filteredContests.map((contest) => ({
             ...contest,
+            link: "https://codeforces.com/contest/" + contest.id,
             host: "codeforces.com",
           }));
 
