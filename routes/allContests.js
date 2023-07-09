@@ -30,7 +30,7 @@ fetchContests();
 router.get("/", function (req, res) {
   try {
     const day = date.getDate();
-    res.render("codeforces.ejs", { date: day, list: contestList });
+    res.render("contests.ejs", { date: day, list: contestList });
   } catch (error) {
     console.log("Error:", error);
     res.status(500).send("Internal Server Error");
