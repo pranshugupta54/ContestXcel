@@ -1,7 +1,7 @@
 <%- include('partials/header'); -%>
 
 <h1>All Contests</h1>
-<h3><%= date %></h3>
+<h3>Today: <%= date %></h3>
 
 <div id="cards">
 <% list.forEach(function(contest){ %>
@@ -20,8 +20,8 @@
         <div class="card-body">
           <h5 class="card-title"><%= contest.name %></h5>
           <h6 class="card-subtitle mb-2 text-body-secondary">Time: <%= startTimeIST %></h6>
-          <p class="card-text"><div id='timer_<%= contest.id %>' data-start-time='<%= contest.startTimeSeconds %>'></div> <br> Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href='<%= contest.link %>' class="card-link">Contest link</a>
+          <p class="card-text"><div id='timer_<%= contest.id %>' data-start-time='<%= contest.startTimeSeconds %>'></div> </p><br><p class="desc">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href='<%= contest.link %>' class="card-link"><button class="part_btn">Participate</button></a>
         </div>
     </div>
     <script>
