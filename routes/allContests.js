@@ -26,6 +26,7 @@ async function fetchContests() {
 
 // Call the function to fetch contests when the server starts
 fetchContests();
+setInterval(fetchContests, 30 * 60 * 1000);
 
 router.get("/", function (req, res) {
   try {
