@@ -1,3 +1,8 @@
+@font-face {
+  font-family: norwester;
+  src: url('../fonts/norwester.otf');
+}
+
 .navbar {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -9,6 +14,12 @@
 }
 .navbar-nav  li a:hover {
     color: #1abc9c !important;
+}
+
+h1,h3{
+    text-align: center;
+    font-family: norwester;
+    color: cyan;
 }
 
 .footer-padding {
@@ -30,13 +41,100 @@
 }
 
 html,body{
-    height: 100%
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1488415032361-b7e238421f1b?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODY2NTA4ODZ8&ixlib=rb-4.0.3&q=85');
 }
 #cards{
     display: flex;
     flex-wrap: wrap;
 }
+/* .card{
+    border-radius: 16px;
+  background-color: #ffffff40;
+  backdrop-filter: blur(32px) brightness(110%);
+  -webkit-backdrop-filter: blur(32px) brightness(110%);
+  box-shadow: 0px 4px 4px #00000010, inset 0px -1px 1px #ffffff20, inset 0px 1px 1px #ffffff40;
+  color: cyan;
+} */
+
 .card{
     margin: 1%;
+    color: cyan;
     padding: 1%;
+}
+
+.card{
+    color: cyan;
+    width: 100%;
+    max-width: 520px;
+    min-height: 320px;
+    
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 2px 2px 15px 4px rgba(0, 0, 0, 0.2);
+    
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    
+    backdrop-filter: blur(6px);
+}
+
+/* .navigation{
+    
+} */
+
+.card div h5 {
+    color: white;
+    font-family: 'norwester';
+    text-align: center;
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+}
+
+.card-body h6, p{
+    color: #252525;
+}
+.part_btn {
+  /* display: inline-block; */
+  padding: 10%;
+  /* border: 0; */
+  text-decoration: none;
+  border-radius: 15px;
+  background-color: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(30px);
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.part_btn:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+
+#footer{
+    background-color: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(30px);
+    color: white;
+}
+#navigation{
+    background-color: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(30px);
+    color: cyan;
+    margin-bottom: 2%;
+}
+#brand_name{
+    color: cyan;
+    font-family: norwester;
+}
+.nav-link{
+    color: white;
 }
