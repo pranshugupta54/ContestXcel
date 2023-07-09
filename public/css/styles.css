@@ -87,7 +87,9 @@ html,body{
     font-family: 'norwester';
     text-align: center;
 }
-
+.card:hover {
+    transform: scale(1.05);
+}
 .card-body{
     display: flex;
     flex-direction: column;
