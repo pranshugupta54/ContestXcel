@@ -6,7 +6,8 @@ const ejs = require("ejs");
 const https = require("https");
 var _ = require('lodash');
 const date = require(__dirname + "/date.js");
-const contestsRouter = require('./routes/allContests.js');
+const contestsRouter = require('./routes/contest/allContests.js');
+const usersRouter = require('./routes/user/UserRoutes.js');
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -17,6 +18,7 @@ app.use(express.static("public"));
 
 
 app.use('/contests', contestsRouter);
+app.use('/users', usersRouter);
 
 // async function codeforces_c() {
 //   const url = "https://codeforces.com/api/contest.list";

@@ -1,0 +1,22 @@
+<%- include('partials/header'); -%>
+
+<h1>User info</h1>
+<h3>Today: <%= date %></h3>
+
+<div id="usercard">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title"><%= user.username %></h5>
+      <p class="card-text desc text-light">
+        CodeForces: <%= user.codeforces.maxRating %>(<%= user.codeforces.maxRank %>) <br>
+        Leetcode: <%= user.leetcode.rating %>(<%= user.leetcode.globalRanking %>) <br>
+        CodeChef: <%= user.codechef.rating %>(<%= user.codechef.stars %>)
+      </p>
+      <a href="/users/<%= user.vanity %>" class="card-link">
+        <button class="part_btn">Refresh</button>
+      </a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer'); -%>

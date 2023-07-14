@@ -57,6 +57,27 @@ html,body{
   color: cyan;
 } */
 
+.Userpagecard{
+    margin: 1%;
+    color: cyan;
+    padding: 1%;
+    width: 100%;
+    max-width: 520px;
+    min-height: 320px;
+    
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 2px 2px 15px 4px rgba(0, 0, 0, 0.2);
+    
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    
+    backdrop-filter: blur(6px);
+}
+#usercard{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 .card{
     margin: 1%;
     color: cyan;
@@ -81,7 +102,14 @@ html,body{
 /* .navigation{
     
 } */
-
+.Userpagecard div h5 {
+    color: white;
+    font-family: 'norwester';
+    text-align: center;
+}
+.Userpagecard:hover {
+    transform: scale(1.05);
+}
 .card div h5 {
     color: white;
     font-family: 'norwester';
