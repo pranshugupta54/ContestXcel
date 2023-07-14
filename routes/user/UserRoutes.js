@@ -5,6 +5,6 @@ const UserFunctions = require('./UserFunctions');
 
 router.get('/', UserFunctions.getAllUsers);
 router.get('/:vanity', UserFunctions.getUserByVanity);
-router.post('/:vanity', UserFunctions.updateUserByVanity);
+// router.post('/:vanity', UserFunctions.updateUserByVanity);
 
 module.exports = router;
