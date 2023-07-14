@@ -127,6 +127,7 @@ function findAndUpdateUserByVanity(vanity, updatedUser) {
   if (userIndex !== -1) {
     users[userIndex] = { ...users[userIndex], ...updatedUser };
   }
+  console.log(users);
 }
 
 async function getAllUsers(req, res) {
@@ -136,6 +137,15 @@ async function getAllUsers(req, res) {
   } catch (error) {
     console.log("Error:", error);
     res.status(500).send("Internal Server Error");
+  }
+}
+
+async function getAllUsersFordashboard() {
+  try {
+    const day = date.getDate();
+    return users;
+  } catch (error) {
+    console.log("Error:", error);
   }
 }
 
@@ -162,25 +172,30 @@ async function getUserByVanity(req, res) {
   }
 }
 
-// async function updateUserByVanity(req, res) {
-//   try {
-//     const vanity = req.url.substring(1);
-//     const updatedUser = {
-//       username: 'Pranshuuuuu',
-//       fetchtime: 1689247374,
-//       codechef: 'updatedcodechef',
-//       codeforces: 'updatedcodeforces',
-//     };
-//     findAndUpdateUserByVanity(vanity, updatedUser);
-//     console.log(users);
-//   } catch (error) {
-//     console.log("Error:", error);
-//     res.status(500).send("Internal Server Error");
-//   }
-// }
+async function updateUserByVanity(req, res) {
+  try {
+    // const vanity = req.url.substring(1);
+    console.log(req.body);
+    const user = req.body;
+
+    const updatedUser = {
+      username: user.username,
+      codechef: {"username":user.codechef},
+      codeforces: {"username":user.codeforces},
+      leetcode: {"username":user.leetcode},
+    };
+    findAndUpdateUserByVanity(user.vanity, updatedUser);
+    // console.log(users);
+    res.status(200).json({ message: 'Form submitted successfully' });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal Server Error");
+  }
+}
 
 module.exports = {
   getAllUsers,
   getUserByVanity,
-  // updateUserByVanity
+  getAllUsersFordashboard,
+  updateUserByVanity
 };

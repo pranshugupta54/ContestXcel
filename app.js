@@ -5,17 +5,26 @@ const https = require("https");
 const date = require(__dirname + "/date.js");
 const contestsRouter = require('./routes/contest/allContests.js');
 const usersRouter = require('./routes/user/UserRoutes.js');
+const dashboardRouter = require('./routes/dashboard.js');
 const app = express();
 
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use('/contests', contestsRouter);
 app.use('/users', usersRouter);
-
-
+app.use('/dashboard', dashboardRouter);
 let PORT = 3001;
+
+// app.post('/edit', (req, res) => {
+//   console.log(req.body);
+//   // Send a success response
+//   res.status(200).json({ message: 'Form submitted successfully' });
+// });
+
+
 
 app.get(["/", '/home'], function(req,res){
   res.render("home");
