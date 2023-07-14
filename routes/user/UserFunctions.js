@@ -6,7 +6,13 @@ const codechefUser = require('../../services/userinfo/codechefUser');
 
 let users = [];
 
-fs.readFile(__dirname + '/userdb.txt', 'utf8', (err, data) => {
+let codeforces_wait_time = 60;
+let leetcode_wait_time = 60;
+let codechef_wait_time = 60;
+let dbUrl = __dirname + '/userdb.txt';
+
+
+fs.readFile(dbUrl, 'utf8', (err, data) => {
   if (err) {
     console.log('Error reading user database file:', err);
     return;
@@ -15,7 +21,6 @@ fs.readFile(__dirname + '/userdb.txt', 'utf8', (err, data) => {
   if (data) {
     try {
       users = JSON.parse(data);
-      // console.log(users);
       console.log('Users loaded successfully from userdb.txt');
     } catch (err) {
       console.log('Error parsing user database:', err);
@@ -26,7 +31,7 @@ fs.readFile(__dirname + '/userdb.txt', 'utf8', (err, data) => {
 function saveUsersToFile() {
   const data = JSON.stringify(users);
 
-  fs.writeFile(__dirname + '/userdb.txt', data, 'utf8', (err) => {
+  fs.writeFile(dbUrl, data, 'utf8', (err) => {
     if (err) {
       console.log('Error saving user database file:', err);
       return;
@@ -40,8 +45,8 @@ async function cf_user(handle) {
     const now = Math.floor(Date.now() / 1000); // Get the current UNIX timestamp in seconds
     const user = users.find((u) => u.codeforces && u.codeforces.username === handle);
     if (user) {
-      if (user.codeforces.fetchtime && now - user.codeforces.fetchtime < 120) {
-        console.log("User info was fetched within the last minute. Skipping API request.");
+      if (user.codeforces.fetchtime && now - user.codeforces.fetchtime < codeforces_wait_time) {
+        console.log("User info (CF) was fetched within the last minute. Skipping API request.");
         return;
       }
       const userInfo = await codeforcesUser.codeforces_u(handle);
@@ -66,12 +71,11 @@ async function leetcode_user(handle) {
     const now = Math.floor(Date.now() / 1000); // Get the current UNIX timestamp in seconds
     const user = users.find((u) => u.leetcode && u.leetcode.username === handle);
     if (user) {
-      if (user.leetcode.fetchtime && now - user.leetcode.fetchtime < 120) {
-        console.log("User info was fetched within the last minute. Skipping API request.");
+      if (user.leetcode.fetchtime && now - user.leetcode.fetchtime < leetcode_wait_time) {
+        console.log("User info (Leetcode) was fetched within the last minute. Skipping API request.");
         return;
       }
       const userInfo = await leetcodeUser.leetcode_u(handle);
-      console.log("HEEREE");
       // console.log(userInfo.userContestRanking);
       user.leetcode.rating = parseInt(userInfo.userContestRanking.rating);
       user.leetcode.globalRanking = userInfo.userContestRanking.globalRanking;
@@ -92,8 +96,8 @@ async function codechef_user(handle) {
     const now = Math.floor(Date.now() / 1000); // Get the current UNIX timestamp in seconds
     const user = users.find((u) => u.codechef && u.codechef.username === handle);
     if (user) {
-      if (user.codechef.fetchtime && now - user.codechef.fetchtime < 120) {
-        console.log("User info was fetched within the last minute. Skipping API request.");
+      if (user.codechef.fetchtime && now - user.codechef.fetchtime < codechef_wait_time) {
+        console.log("User info (Codechef) was fetched within the last minute. Skipping API request.");
         return;
       }
       const userInfo = await codechefUser.codechef_u(handle);
@@ -140,37 +144,43 @@ async function getUserByVanity(req, res) {
     // res.render("loading.ejs");
     const vanity = req.url.substring(1);
     const user = findUserByVanity(vanity);
-    await cf_user(user.codeforces.username);
-    await leetcode_user(user.leetcode.username);
-    await codechef_user(user.codechef.username);
+    if(user == null){
+      let text = "No User Found";
+      res.render("404", {text:text});
+    } else {
+      const cfPromise = cf_user(user.codeforces.username);
+      const leetCodePromise = leetcode_user(user.leetcode.username);
+      const codechefPromise = codechef_user(user.codechef.username);
 
-    const day = date.getDate();
-    res.render("userPage.ejs", { date: day, user: user });
+      await Promise.all([cfPromise, leetCodePromise, codechefPromise]);
+      const day = date.getDate();
+      res.render("userPage.ejs", { date: day, user: user });
+    }
   } catch (error) {
     console.log("Error:", error);
     res.status(500).send("Internal Server Error");
   }
 }
 
-async function updateUserByVanity(req, res) {
-  try {
-    const vanity = req.url.substring(1);
-    const updatedUser = {
-      username: 'Pranshuuuuu',
-      fetchtime: 1689247374,
-      codechef: 'updatedcodechef',
-      codeforces: 'updatedcodeforces',
-    };
-    findAndUpdateUserByVanity(vanity, updatedUser);
-    console.log(users);
-  } catch (error) {
-    console.log("Error:", error);
-    res.status(500).send("Internal Server Error");
-  }
-}
+// async function updateUserByVanity(req, res) {
+//   try {
+//     const vanity = req.url.substring(1);
+//     const updatedUser = {
+//       username: 'Pranshuuuuu',
+//       fetchtime: 1689247374,
+//       codechef: 'updatedcodechef',
+//       codeforces: 'updatedcodeforces',
+//     };
+//     findAndUpdateUserByVanity(vanity, updatedUser);
+//     console.log(users);
+//   } catch (error) {
+//     console.log("Error:", error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// }
 
 module.exports = {
   getAllUsers,
   getUserByVanity,
-  updateUserByVanity
+  // updateUserByVanity
 };
