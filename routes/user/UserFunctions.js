@@ -40,7 +40,7 @@ async function cf_user(handle) {
     const now = Math.floor(Date.now() / 1000); // Get the current UNIX timestamp in seconds
     const user = users.find((u) => u.codeforces && u.codeforces.username === handle);
     if (user) {
-      if (user.codeforces.fetchtime && now - user.codeforces.fetchtime < 60) {
+      if (user.codeforces.fetchtime && now - user.codeforces.fetchtime < 120) {
         console.log("User info was fetched within the last minute. Skipping API request.");
         return;
       }
@@ -49,7 +49,7 @@ async function cf_user(handle) {
       user.codeforces.maxRank = userInfo.maxRank;
       user.codeforces.fetchtime = now;
       // console.log("User info updated:", user);
-      console.log("User info updated:");
+      console.log("User CF Updated");
       saveUsersToFile();
     } else {
       console.log("User not found in the array");
@@ -66,18 +66,18 @@ async function leetcode_user(handle) {
     const now = Math.floor(Date.now() / 1000); // Get the current UNIX timestamp in seconds
     const user = users.find((u) => u.leetcode && u.leetcode.username === handle);
     if (user) {
-      if (user.leetcode.fetchtime && now - user.leetcode.fetchtime < 60) {
+      if (user.leetcode.fetchtime && now - user.leetcode.fetchtime < 120) {
         console.log("User info was fetched within the last minute. Skipping API request.");
         return;
       }
       const userInfo = await leetcodeUser.leetcode_u(handle);
       console.log("HEEREE");
-      console.log(userInfo.userContestRanking);
+      // console.log(userInfo.userContestRanking);
       user.leetcode.rating = parseInt(userInfo.userContestRanking.rating);
       user.leetcode.globalRanking = userInfo.userContestRanking.globalRanking;
       user.leetcode.fetchtime = now;
       // console.log("User info updated:", user);
-      console.log("User info updated:");
+      console.log("User Leetcode updated");
       saveUsersToFile();
     } else {
       console.log("User not found in the array");
@@ -92,7 +92,7 @@ async function codechef_user(handle) {
     const now = Math.floor(Date.now() / 1000); // Get the current UNIX timestamp in seconds
     const user = users.find((u) => u.codechef && u.codechef.username === handle);
     if (user) {
-      if (user.codechef.fetchtime && now - user.codechef.fetchtime < 60) {
+      if (user.codechef.fetchtime && now - user.codechef.fetchtime < 120) {
         console.log("User info was fetched within the last minute. Skipping API request.");
         return;
       }
@@ -102,7 +102,7 @@ async function codechef_user(handle) {
       user.codechef.stars = userInfo.stars;
       user.codechef.fetchtime = now;
       // console.log("User info updated:", user);
-      console.log("User info updated:");
+      console.log("User CodeChef updated");
       saveUsersToFile();
     } else {
       console.log("User not found in the array");
