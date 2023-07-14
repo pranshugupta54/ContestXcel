@@ -43,7 +43,7 @@ async function leetcode_u(handle) {
                 globalRanking: 0,
             }
           }
-          console.log(userInfo);
+        //   console.log(userInfo);
           resolve(userInfo.data);
         } catch (error) {
           console.log('Error parsing JSON:', error);
