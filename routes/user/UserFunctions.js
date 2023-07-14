@@ -137,6 +137,7 @@ async function getAllUsers(req, res) {
 
 async function getUserByVanity(req, res) {
   try {
+    // res.render("loading.ejs");
     const vanity = req.url.substring(1);
     const user = findUserByVanity(vanity);
     await cf_user(user.codeforces.username);
