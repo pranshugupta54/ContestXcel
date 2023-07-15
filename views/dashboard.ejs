@@ -108,8 +108,7 @@
         <div class="right d-flex flex-column w-100 p-5">
             <div class="top d-flex flex-row justify-content-between">
                 <h1>Manage Users</h1>
-                <a href="#" style="width: 13%;"><button type="button" class="btn btn-primary"
-                        style="width: -webkit-fill-available;">Add User</button></a>
+                <a href="#" style="width: 13%;"><button type="button" class="btn btn-primary" style="width: -webkit-fill-available;" data-bs-toggle="modal" data-bs-target="#addModal">Add User</button></a>
             </div>
             <div class="bottom">
 
@@ -136,12 +135,12 @@
                                     <td><%= users[i].vanity %></td>
                                     <td>
                                             <button type="button"
-                                                    class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-user='<%= JSON.stringify(user)%>'>Edit
+                                                    class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-user='<%= JSON.stringify(user)%>'>Edit
                                             </button>
                                     </td>
                                     <td>
-                                            <button type="button"
-                                                    class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal2" data-user='<%=JSON.stringify(users[i])%>'>Deletee
+                                            <button onclick="addInfo(this)" type="button"
+                                                    class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-user='<%=JSON.stringify(users[i])%>'>Deletee
                                             </button>
                                     </td>
                                 </tr>
@@ -165,7 +164,7 @@
 
 
     </div>
-    <!-- Modal -->
+    <!-- Modal 1 edit -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -210,7 +209,7 @@
           </div>
         </div>
       </div>
-    <!-- Modal 2 -->
+    <!-- Modal 2 edit -->
     <div class="modal fade" id="exampleModal2" aria-hidden="true" aria-labelledby="exampleModalLabel2" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -227,6 +226,72 @@
           </div>
         </div>
     </div>
+    <!-- Modal delete -->
+    <div class="modal fade" id="deleteModal" aria-hidden="true" aria-labelledby="deleteModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="del-message">
+              Are you sure you want to delete the user?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" id="del-yes" class="btn btn-secondary" onclick="refreshPage()">Yes</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!-- Modal ADD -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Add Details</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="add-modal-form">
+                <div class="mb-3">
+                  <label for="username" class="col-form-label">User:</label>
+                  <input type="text" class="form-control" id="username" name="username">
+                </div>
+                <div class="mb-3">
+                    <label for="vanity" class="col-form-label">Vanity:</label>
+                    <input type="text" class="form-control" id="vanity" name="vanity">
+                </div>
+                <div class="mb-3">
+                    <label for="codechef" class="col-form-label">Codechef:</label>
+                    <input type="text" class="form-control" id="codechef" name="codechef">
+                </div>
+                <div class="mb-3">
+                    <label for="codeforces" class="col-form-label">Codeforces:</label>
+                    <input type="text" class="form-control" id="codeforces" name="codeforces">
+                </div>
+                <div class="mb-3">
+                    <label for="leetcode" class="col-form-label">Leetcode:</label>
+                    <input type="text" class="form-control" id="leetcode" name="leetcode">
+                </div>
+                <!-- <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Message:</label>
+                  <textarea class="form-control" id="message-text"></textarea>
+                </div> -->
+                <!-- <button type="submit">submit</button> -->
+              <!-- </form> -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary form="add-modal-form">Send</button>
+            </div>
+        </form>
+          </div>
+        </div>
+    </div>
+    
+
+
 </body>
 <!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -251,7 +316,17 @@ function refreshPage() {
   location.reload();
 }
 
-  document.addEventListener('DOMContentLoaded', function() {
+function addInfo(button) {
+  const dataUser = button.getAttribute('data-user');
+  const delYesButton = document.getElementById('del-yes');
+  delYesButton.setAttribute('data-user', dataUser);
+  console.log(delYesButton.getAttribute('data-user'));
+}
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('[data-bs-target="#exampleModal"]');
     const usernameInput = document.querySelector('#username');
     const vanityInput = document.querySelector('#vanity');
@@ -279,7 +354,59 @@ function refreshPage() {
         leetcodeInput.value = lc;
       });
     });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the modal element
+  const modal = document.getElementById('addModal');
+  const modalMessage = document.getElementById('m2-message');
+
+//   Function to close the modal
+  function closeModal() {
+    const modalInstance = bootstrap.Modal.getInstance(modal);
+    modalInstance.hide();
+  }
+
+  // Attach event listener to the form submission
+  const form = document.getElementById('add-modal-form');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    console.log("DATA");
+    console.log(formData);
+    console.log(data);
+
+    // Make the POST request to your backend
+    fetch('/users/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (response.ok) {
+        // Form submission successful, close the modal
+        // const firstModal = document.getElementById('exampleModal');
+        const secondModal = new bootstrap.Modal(document.getElementById('exampleModal2'));
+        // firstModal.hide();
+        closeModal();
+        secondModal.show();
+        modalMessage.textContent = 'Form submitted successfully.';
+      } else {
+        const secondModal = new bootstrap.Modal(document.getElementById('exampleModal2'));
+        closeModal();
+        secondModal.show();
+        modalMessage.textContent = 'Error Submitting Form';
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   });
+});
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -320,6 +447,63 @@ document.addEventListener('DOMContentLoaded', function() {
         closeModal();
         secondModal.show();
         modalMessage.textContent = 'Form submitted successfully.';
+      } else {
+        const secondModal = new bootstrap.Modal(document.getElementById('exampleModal2'));
+        closeModal();
+        secondModal.show();
+        modalMessage.textContent = 'Error Submitting Form';
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  });
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the modal element
+  const modal = document.getElementById('deleteModal');
+//   const modalMessage = document.getElementById('m2-message');
+
+//   Function to close the modal
+  function closeModal() {
+    const modalInstance = bootstrap.Modal.getInstance(modal);
+    modalInstance.hide();
+  }
+
+
+  
+  // Attach event listener to the form submission
+  const button = document.getElementById('del-yes');
+  button.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default form submission
+    // const formData = new FormData(form);
+    // const data = Object.fromEntries(formData);
+    const button = event.target; // Reference to the button element
+    const buttonData = button.getAttribute('data-user');
+    console.log("DATA");
+    console.log(buttonData);
+    const data = JSON.stringify(buttonData);
+    console.log(data);
+
+    // Make the POST request to your backend
+    fetch('/users/delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: buttonData
+    })
+    .then(response => {
+      if (response.ok) {
+        // Form submission successful, close the modal
+        // const firstModal = document.getElementById('exampleModal');
+        // const secondModal = new bootstrap.Modal(document.getElementById('exampleModal2'));
+        // firstModal.hide();
+        closeModal();
+        // secondModal.show();
+        // modalMessage.textContent = 'Form submitted successfully.';
       } else {
         const secondModal = new bootstrap.Modal(document.getElementById('exampleModal2'));
         closeModal();
