@@ -26,9 +26,24 @@
         </div>
     </div>
     <script>
+        function getCurrentTimeIST() {
+          const options = {
+            timeZone: 'Asia/Kolkata', // 'Asia/Kolkata' is the time zone for Indian Standard Time (IST)
+            hour12: false, // Set to true if you want 12-hour format (AM/PM)
+          };
+
+          const formatter = new Intl.DateTimeFormat('en-IN', options);
+          const currentTimeString = formatter.format(new Date());
+
+          // Convert the formatted time string to a timestamp in seconds
+          const currentTime = Math.floor(new Date(currentTimeString).getTime() / 1000);
+
+          return currentTime;
+        }
         function updateTimer(startTime, timerElementId) {
           const timerElement = document.getElementById(timerElementId);
-          const currentTime = Math.floor(Date.now() / 1000);
+          // const currentTime = Math.floor(Date.now() / 1000);
+          const currentTime = getCurrentTimeIST();
           const timeDiff = startTime - currentTime;
       
           if (timeDiff <= 0) {
