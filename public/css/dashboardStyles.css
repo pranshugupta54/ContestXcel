@@ -42,7 +42,8 @@ h1,h3{
 
 html,body{
     height: 100%;
-    background-image: url('https://images.unsplash.com/photo-1488415032361-b7e238421f1b?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODY2NTA4ODZ8&ixlib=rb-4.0.3&q=85');
+    background-color: rgb(33 37 41 / 81%);
+    /* background-image: url('https://images.unsplash.com/photo-1488415032361-b7e238421f1b?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODY2NTA4ODZ8&ixlib=rb-4.0.3&q=85'); */
 }
 #cards{
     display: flex;
@@ -78,16 +79,17 @@ html,body{
     flex-wrap: wrap;
     justify-content: center;
 }
-
-.card, .user-card{
+.card{
     margin: 1%;
     color: cyan;
     padding: 1%;
+}
+
+.card{
     color: cyan;
     width: 100%;
     max-width: 520px;
-    /* min-height: 320px; */
-    min-height: fit-content;
+    min-height: 320px;
     
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 2px 2px 15px 4px rgba(0, 0, 0, 0.2);
@@ -109,22 +111,22 @@ html,body{
 .Userpagecard:hover {
     transform: scale(1.05);
 }
-.card div h5, .user-card div h5 {
+.card div h5 {
     color: white;
     font-family: 'norwester';
     text-align: center;
 }
-.card:hover, .user-card:hover {
+.card:hover {
     transform: scale(1.05);
 }
-.card-body, .user-card-body{
+.card-body{
     display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: space-around;
 }
 
-.card-body h6, p, .user-card-body h6, p{
+.card-body h6, p{
     color: #252525;
 }
 .part_btn {
@@ -157,8 +159,8 @@ html,body{
     position: relative;
 }
 #navigation{
-    background-color: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.1);
+    background-color: rgb(33, 37, 41);
+    border: 1px solid rgb(33, 37, 41);
     backdrop-filter: blur(30px);
     color: cyan;
     margin-bottom: 2%;
@@ -169,22 +171,4 @@ html,body{
 }
 .nav-link{
     color: white;
-}
-
-
-
-/* user list page */
-.user-card-img{
-    border-radius: 100%;
-    width: 50%;
-    /* align-items: center; */
-    align-self: center;
-    padding: 2%;
-    margin: 2%;
-}
-.user-card-title{
-    margin: 10%;
-}
-.user-card-link{
-    margin: 5%;
 }

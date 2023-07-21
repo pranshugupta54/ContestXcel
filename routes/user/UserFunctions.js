@@ -105,9 +105,10 @@ async function codechef_user(handle) {
       user.codechef.rating = userInfo.rating;
       user.codechef.stars = userInfo.stars;
       user.codechef.fetchtime = now;
-      // console.log("User info updated:", user);
-      console.log("User CodeChef updated");
+      console.log("User info updated:", user);
       saveUsersToFile();
+      console.log("User CodeChef updated");
+      console.log(users);
     } else {
       console.log("User not found in the array");
     }
@@ -127,7 +128,51 @@ function findAndUpdateUserByVanity(vanity, updatedUser) {
   if (userIndex !== -1) {
     users[userIndex] = { ...users[userIndex], ...updatedUser };
   }
+  saveUsersToFile();
+  console.log(users);
 }
+
+function findAndDeleteUserByVanity(vanity) {
+  const userIndex = users.findIndex(user => user.vanity === vanity);
+  if (userIndex !== -1) {
+    users.splice(userIndex, 1);
+  }
+  // console.log(users);
+  saveUsersToFile();
+}
+
+function addUserBydetails(user) {
+  console.log(user);
+
+  // Check if vanity already exists
+  const existingUser = users.find(existingUser => existingUser.vanity === user.vanity);
+  if (existingUser) {
+    throw new Error(`User with vanity '${user.vanity}' already exists.`);
+  }
+
+  const newUser = {
+    username: user.username,
+    vanity: user.vanity,
+    codechef: {
+      username: user?.codechef,
+      rating: 0,
+      stars: 0,
+      fetchtime: 1,
+    },
+    codeforces: {
+      username: user?.codeforces,
+      fetchtime: 1,
+    },
+    leetcode: {
+      username: user?.leetcode,
+      fetchtime: 1,
+    },
+  };
+  
+  users.push(newUser);
+  saveUsersToFile();
+}
+
 
 async function getAllUsers(req, res) {
   try {
@@ -136,6 +181,15 @@ async function getAllUsers(req, res) {
   } catch (error) {
     console.log("Error:", error);
     res.status(500).send("Internal Server Error");
+  }
+}
+
+async function getAllUsersFordashboard() {
+  try {
+    const day = date.getDate();
+    return users;
+  } catch (error) {
+    console.log("Error:", error);
   }
 }
 
@@ -162,25 +216,58 @@ async function getUserByVanity(req, res) {
   }
 }
 
-// async function updateUserByVanity(req, res) {
-//   try {
-//     const vanity = req.url.substring(1);
-//     const updatedUser = {
-//       username: 'Pranshuuuuu',
-//       fetchtime: 1689247374,
-//       codechef: 'updatedcodechef',
-//       codeforces: 'updatedcodeforces',
-//     };
-//     findAndUpdateUserByVanity(vanity, updatedUser);
-//     console.log(users);
-//   } catch (error) {
-//     console.log("Error:", error);
-//     res.status(500).send("Internal Server Error");
-//   }
-// }
+async function deleteUserByVanity(req,res){
+  try {
+    console.log("Im Here");
+    // console.log(req);
+    findAndDeleteUserByVanity(req.body.vanity);
+    // console.log(req.body);
+    res.status(200).json({ message: 'Form submitted successfully' });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
+async function addUser(req,res){
+  try {
+    // console.log("Im Here");
+    addUserBydetails(req.body);
+    // console.log(req);
+    // console.log(req.body);
+    res.status(200).json({ message: 'Form submitted successfully' });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
+async function updateUserByVanity(req, res) {
+  try {
+    // const vanity = req.url.substring(1);
+    console.log(req.body);
+    const user = req.body;
+
+    const updatedUser = {
+      username: user.username,
+      codechef: {"username":user.codechef},
+      codeforces: {"username":user.codeforces},
+      leetcode: {"username":user.leetcode},
+    };
+    findAndUpdateUserByVanity(user.vanity, updatedUser);
+    // console.log(users);
+    res.status(200).json({ message: 'Form submitted successfully' });
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send("Internal Server Error");
+  }
+}
 
 module.exports = {
   getAllUsers,
   getUserByVanity,
-  // updateUserByVanity
+  getAllUsersFordashboard,
+  updateUserByVanity,
+  deleteUserByVanity,
+  addUser
 };
