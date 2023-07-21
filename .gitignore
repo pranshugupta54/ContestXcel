@@ -3,3 +3,6 @@
 
 # Ignore node_modules folder
 node_modules
+
+/routes/user/userdb.txt
+routes/user/userdb.txt
