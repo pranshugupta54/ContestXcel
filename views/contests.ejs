@@ -26,20 +26,17 @@
         </div>
     </div>
     <script>
-        function getCurrentTimeIST() {
-          const options = {
-            timeZone: 'Asia/Kolkata', // 'Asia/Kolkata' is the time zone for Indian Standard Time (IST)
-            hour12: false, // Set to true if you want 12-hour format (AM/PM)
-          };
+            function getCurrentTimeIST() {
+              const date = new Date();
+              const ISTOffset = 330; // Indian Standard Time (IST) offset from UTC in minutes (5 hours 30 minutes)
+              const utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
+              const ISTTime = new Date(utcTime + (ISTOffset * 60000));
 
-          const formatter = new Intl.DateTimeFormat('en-IN', options);
-          const currentTimeString = formatter.format(new Date());
+              // Convert the ISTTime to seconds and return
+              const currentTime = Math.floor(ISTTime.getTime() / 1000);
 
-          // Convert the formatted time string to a timestamp in seconds
-          const currentTime = Math.floor(new Date(currentTimeString).getTime() / 1000);
-
-          return currentTime;
-        }
+              return currentTime;
+            }
         function updateTimer(startTime, timerElementId) {
           const timerElement = document.getElementById(timerElementId);
           // const currentTime = Math.floor(Date.now() / 1000);
