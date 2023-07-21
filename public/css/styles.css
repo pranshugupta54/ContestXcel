@@ -78,17 +78,16 @@ html,body{
     flex-wrap: wrap;
     justify-content: center;
 }
-.card{
+
+.card, .user-card{
     margin: 1%;
     color: cyan;
     padding: 1%;
-}
-
-.card{
     color: cyan;
     width: 100%;
     max-width: 520px;
-    min-height: 320px;
+    /* min-height: 320px; */
+    min-height: fit-content;
     
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 2px 2px 15px 4px rgba(0, 0, 0, 0.2);
@@ -110,22 +109,22 @@ html,body{
 .Userpagecard:hover {
     transform: scale(1.05);
 }
-.card div h5 {
+.card div h5, .user-card div h5 {
     color: white;
     font-family: 'norwester';
     text-align: center;
 }
-.card:hover {
+.card:hover, .user-card:hover {
     transform: scale(1.05);
 }
-.card-body{
+.card-body, .user-card-body{
     display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: space-around;
 }
 
-.card-body h6, p{
+.card-body h6, p, .user-card-body h6, p{
     color: #252525;
 }
 .part_btn {
@@ -170,4 +169,22 @@ html,body{
 }
 .nav-link{
     color: white;
+}
+
+
+
+/* user list page */
+.user-card-img{
+    border-radius: 100%;
+    width: 50%;
+    /* align-items: center; */
+    align-self: center;
+    padding: 2%;
+    margin: 2%;
+}
+.user-card-title{
+    margin: 10%;
+}
+.user-card-link{
+    margin: 5%;
 }
