@@ -78,7 +78,7 @@ router.get("/", function (req, res) {
   try {
     const day = date.getDate();
     res.render("contests.ejs", { date: day, list: contestList, fetchTime: timing.fetchTime });
-    console.log(contestList);
+    // console.log(contestList);
   } catch (error) {
     console.log("Error:", error);
     res.status(500).send("Internal Server Error");
